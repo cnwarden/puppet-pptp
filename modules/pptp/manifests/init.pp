@@ -36,4 +36,9 @@ class pptp::install {
         mode    => "0644",
         require => Package['pptpd'],
     }
+    
+    service { 'pptpd':
+        ensure => "running",
+        require => [File["/etc/ppp/options.pptpd"], File["/etc/ppp/chap-secrets"]],
+    }
 }
