@@ -6,12 +6,7 @@ if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
 
-export dfd=https://sami.cdt.int.thomsonreuters.com/svn/collections_datafeeddirect
-export upg_coll=https://eegitemea.int.thomsonreuters.com/upg_collections
-
 arr=($SSH_CLIENT)
 export DISPLAY=${arr[0]}:0
 
 export PS1="\n\[\e[1;30m\][$$:$PPID - \j:\!\[\e[1;30m\]]\[\e[0;36m\] \T \[\e[1;30m\][\[\e[1;34m\]\u@\H\[\e[1;30m\]:\[\e[0;37m\]${SSH_TTY:-o} \[\e[0;32m\]+${SHLVL}\[\e[1;30m\]] \[\e[1;37m\]\w\[\e[0;37m\] \n\$ "
-
-sudo iptables -F
