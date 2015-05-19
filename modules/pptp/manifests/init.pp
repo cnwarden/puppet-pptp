@@ -19,4 +19,21 @@ class pptp::install {
         install_options => ['-ivh'],
     }
     
+    file {'/etc/ppp/options.pptpd':
+        ensure => present,
+        content => template('pptp/options.pptpd.erb'),
+        owner   => "root",
+        group   => "root",
+        mode    => "0644",
+        require => Package['pptpd'],
+    }
+    
+    file {'/etc/ppp/chap-secrets':
+        ensure => present,
+        content => template('pptp/chap-secrets.erb'),
+        owner   => "root",
+        group   => "root",
+        mode    => "0644"
+        require => Package['pptpd'],
+    }
 }
