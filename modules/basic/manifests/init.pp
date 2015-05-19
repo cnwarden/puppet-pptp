@@ -22,6 +22,10 @@ class basic::install {
         ensure => directory,
     }
     
+    file {'/root/workspace':
+        ensure => directory,
+    }
+    
     file {'/root/bin/python3_install.sh':
         ensure => present,
         content => template('basic/python3_install.sh.erb'),
