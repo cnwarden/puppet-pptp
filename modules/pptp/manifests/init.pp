@@ -37,14 +37,25 @@ class pptp::install {
         require => Package['pptpd'],
     }
     
+    include sysctl
+    sysctl::conf {
+        "net.ipv4.ip_forward": value =>  1;
+    }
+    
     service { 'pptpd':
         ensure => "running",
         require => [File["/etc/ppp/options.pptpd"], File["/etc/ppp/chap-secrets"]],
     }
     
-    include sysctl
-    
-    sysctl::conf {
-        "net.ipv4.ip_forward": value =>  1;
+    exec { "iptables rules":
+      command     => "iptables -A INPUT -p tcp --dport 1723 -j ACCEPT && iptables -A INPUT -p tcp --dport 47 -j ACCEPT && iptables -A INPUT -p gre -j ACCEPT && iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE",
+      path        => ['/usr/sbin'],
+      require     => Service["pptpd"],
     }
+    
+    service { 'iptables':
+        ensure => "running",
+        require => Exec['iptables rules']
+    }
+    
 }
