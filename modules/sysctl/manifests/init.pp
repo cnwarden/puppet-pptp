@@ -8,6 +8,7 @@ class sysctl {
    exec { "sysctl -p":
       alias       => "sysctl",
       refreshonly => true,
+      path        => ['/usr/sbin'],
       subscribe   => File["sysctl_conf"],
    }
 }
