@@ -58,20 +58,21 @@ class basic::install {
         require=> Package['vsftpd'],
     }
     
-    file {'/home/timmy':
-        ensure => directory,
-        owner   => "timmy",
-        group   => "ftpuser",
-        mode    => "0755",
-    }
-    
     user {'timmy':
         ensure     => present,
         gid        => "ftpuser",
         home       => "/home/timmy",
         shell      => "/sbin/nologin",
         password   => sha1('timmy1'),
-        require    => [File['/home/timmy'], Group["ftpuser"]],
+        require    => Group["ftpuser"],
+    }
+    
+    file {'/home/timmy':
+        ensure => directory,
+        owner   => "timmy",
+        group   => "ftpuser",
+        mode    => "0755",
+        require => User["timmy"],
     }
     
     service {'vsftpd':
