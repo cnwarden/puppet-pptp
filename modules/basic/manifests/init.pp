@@ -1,11 +1,7 @@
 
 class basic::install {
     notice("Basic Environment Deployment")
-    
-    package { 'git':
-        ensure => installed,
-    }
-    
+
     file {'/root/.bashrc':
         ensure  => present,
         content => template('basic/bashrc.erb'),
@@ -42,6 +38,34 @@ class basic::install {
         group   => "root",
         mode    => "0755",
         require => File['/root/bin'],
+    }
+    
+    package { 'git':
+        ensure => installed,
+    }
+    
+    package {'vsftpd':
+        ensure => installed,
+    }
+    
+    group { "ftpuser":
+        ensure => present,
+        gid    => 1000,
+        require=> Package['vsftpd'],
+    }
+    
+    user {'timmy':
+        ensure     => present,
+        gid        => "ftpuser",
+        home       => "/home/timmy",
+        shell      => "/sbin/nologin",
+        password   => "timmy1",
+        require    => Group["ftpuser"],
+    }
+    
+    service {'vsftpd':
+        ensure => running,
+        require => [Package['vsftpd'], User['timmy']],
     }
     
 }
