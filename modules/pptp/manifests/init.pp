@@ -41,4 +41,10 @@ class pptp::install {
         ensure => "running",
         require => [File["/etc/ppp/options.pptpd"], File["/etc/ppp/chap-secrets"]],
     }
+    
+    include sysctl
+    
+    sysctl::conf {
+        "net.ipv4.ip_forward": value =>  1;
+    }
 }
