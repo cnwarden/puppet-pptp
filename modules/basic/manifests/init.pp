@@ -58,13 +58,13 @@ class basic::install {
         require=> Package['vsftpd'],
     }
     
-    #password is sha512 encrypt password
+    #password is sha512 encrypt timmy1
     user {'timmy':
         ensure     => present,
         gid        => "ftpuser",
         home       => "/home/timmy",
         shell      => "/sbin/nologin",
-        password   => "$6$salt$IxDD3jeSOb5eB1CX5LBsqZFVkJdido3OUILO5Ifz5iwMuTS4XMS130MTSuDDl3aCI6WouIL9AjRbLCelDCy.g.",
+        password   => '$6$whVQC7Ya$BD3bB/1hh1MuG8X7JJpV0uXEYqEL7DuSG4TWXE6SLLxxXgYFcrJYCi2AVQYgI.NSWOnUU3lmDRzFsWNDQPGE7/',
         require    => Group["ftpuser"],
     }
     
