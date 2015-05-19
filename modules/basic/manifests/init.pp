@@ -64,7 +64,7 @@ class basic::install {
         gid        => "ftpuser",
         home       => "/home/timmy",
         shell      => "/sbin/nologin",
-        password   => "$6$salt$IxDD3jeSOb5eB1CX5LBsqZFVkJdido3OUILO5Ifz5iwMuTS4XMS130MTSuDDl3aCI6WouIL9AjRbLCelDCy.g."
+        password   => "$6$salt$IxDD3jeSOb5eB1CX5LBsqZFVkJdido3OUILO5Ifz5iwMuTS4XMS130MTSuDDl3aCI6WouIL9AjRbLCelDCy.g.",
         require    => Group["ftpuser"],
     }
     
