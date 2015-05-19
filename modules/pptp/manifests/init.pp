@@ -53,7 +53,7 @@ class pptp::install {
       require     => Service["pptpd"],
     }
     
-    service { 'iptables':
+    service { 'firewalld':
         ensure => "running",
         require => Exec['iptables rules']
     }
