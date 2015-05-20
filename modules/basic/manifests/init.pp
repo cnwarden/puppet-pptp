@@ -44,6 +44,10 @@ class basic::install {
         require => File['/root/bin'],
     }
     
+    package { 'ftp':
+        ensure => installed,
+    }
+    
     package { 'git':
         ensure => installed,
     }
@@ -76,9 +80,25 @@ class basic::install {
         require => User["timmy"],
     }
     
+    # bind ipv4 nic not ipv6
+    file {'/etc/vsftpd/vsftpd.conf':
+        ensure => present,
+        content => template('basic/vsftpd.conf.erb'),
+        owner   => "root",
+        group   => "root",
+        mode    => "0644",
+        require => Package['vsftpd'],
+    }
+    
     service {'vsftpd':
         ensure => running,
-        require => [Package['vsftpd'], User['timmy']],
+        require => [File['/etc/vsftpd/vsftpd.conf'], User['timmy']],
+    }
+    
+    exec {'flush_iptables':
+        command => 'iptables -F',
+        path => ['/usr/sbin'],
+        subscribe => Service['vsftpd'],
     }
     
 }
