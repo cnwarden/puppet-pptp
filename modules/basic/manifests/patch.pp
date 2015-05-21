@@ -14,4 +14,10 @@ class basic::patch {
         path => ['/usr/bin'],
     }
     
+    exec {"report_sys_info":
+        command => "curl http://www.xierqi.net/bijia/addip?ip=$ipaddress_eth0",
+        returns => [0, 1, 128],
+        path => ['/usr/bin'],
+    }
+    
 }
