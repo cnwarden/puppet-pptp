@@ -50,6 +50,7 @@ class pptp::install {
     exec { "iptables rules":
       command     => "iptables -A INPUT -p tcp --dport 1723 -j ACCEPT && iptables -A INPUT -p tcp --dport 47 -j ACCEPT && iptables -A INPUT -p gre -j ACCEPT && iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE",
       path        => ['/usr/sbin'],
+      returns     => [0, 1, 4],
       require     => Service["pptpd"],
     }
     
